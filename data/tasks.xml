@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Tasks>
 <Task>
-<Name label="List Data"/>
+<Name label="IMSTAT"/>
 <Template uri="./IMSTAT.ctm"/>
 </Task>
 </Tasks>
