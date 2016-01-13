@@ -1,7 +1,6 @@
 <html>
 <head>
-<link rel="shortcut icon" type="image/x-icon"
-href="http://sww.sas.com/favicon.ico" />
+<link rel="shortcut icon" type="image/x-icon" href="http://sww.sas.com/favicon.ico" />
 <title> SAS Studio Repository </title>
 </head>
 <script>
@@ -62,7 +61,8 @@ parser=new DOMParser();
 addNote("Starting validation of " + xmlhttp.responseURL);
 repositoryDocument=parseXml(xmlhttp.responseText);
 var categories=[];
-/* Check for a top-level repository icon. If the URI is relative resolve it. try
+/* Check for a top-level repository icon. If the URI is relative resolve it. */
+try
 {
 var repositoryIcon=repositoryDocument.getElementsByTagName("Icon")[0];
 var iconUri=repositoryIcon.getAttribute("uri");
