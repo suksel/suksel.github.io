@@ -1,0 +1,809 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Task schemaVersion="4.0" runNLS="never">
+	<!--- The Registration element represents a collection of metadata for the task. 
+        This element is required in order to know the type of task   -->   
+	<Registration>
+		<Name>Data Scientist</Name>
+		<Description>This task makes everyone a Data Scientist!</Description>
+		<GUID>726B2B12-4542-4200-96F4-960C645D767F</GUID>
+		<Procedures>Proc IMSTAT</Procedures>
+		<Version>3.4</Version>
+		<Links>
+			<Link href="http://support.sas.com/documentation/cdl/en/inmsref/68736/HTML/default/viewer.htm#n1l5k6bed95vzqn1a47vafe3q958.htm">
+		IMSTAT procedure (Analytics) Documentation</Link>
+			<Link href="http://support.sas.com/documentation/onlinedoc/sasstudio/index.html">SAS Studio User's Guide</Link>
+		</Links>
+	</Registration>
+
+	<!--- Metadata element comprises two parts:  the DataSources element and the Options element -->
+	<!--- The DataSources and DataSource elements create a simple grouping of the data that is required for the task -->	
+	<Metadata>
+		<DataSources>		
+			<DataSource name="DATASOURCE">
+				<Roles>			
+					<Role exclude="INDEP" maxVars="1" minVars="1" name="DEP" order="true" type="N">Dependent variable:</Role>
+					<Role exclude="DEP" maxVars="0" minVars="1" name="INDEP" order="true" type="N">Independent variables:</Role>					
+					<Role exclude="DEP,INDEP" maxVars="0" minVars="0" name="BY" order="true" type="A">Group variables:</Role>					
+					<Role maxVars="0" minVars="0" name="RANKVAR" order="true" type="A">Or Top and Bottom 10 for Chosen Variables:</Role>
+					<Role maxVars="1" minVars="1" name="CORRINDEP" order="true" type="N">Dependent Variable:</Role>
+					<Role maxVars="1" minVars="0" name="HISTVAR" order="true" type="N">Please choose a variable for the Histogram:</Role>
+					<Role maxVars="1" minVars="0" name="MD_DEP" order="true" type="N">Calculate Statistics On:</Role>	
+					<Role maxVars="0" minVars="0" name="MD_BY" order="true" type="C">Group variables:</Role>											
+					<Role maxVars="0" minVars="0" name="MODVAR" order="true" type="N">Please choose variables to Transform:</Role>	
+					<Role maxVars="0" minVars="0" name="DROPVAR" order="true" type="N">Please choose computed variables to DROP:</Role>	
+					<Role maxVars="0" minVars="1" name="REGCVAR" order="true" type="N">Please choose variables for simple regression:</Role>	
+					<Role maxVars="1" minVars="0" name="RESVAR" order="true" type="N">Do you want to add any comments on a particular variable?</Role>	
+				</Roles>			
+			</DataSource>	
+		</DataSources>
+
+		<!--- The options elements  -->
+		<Options>
+			<!--- DATA TAB -->
+			<Option name="DATATAB" inputType="string">DATA</Option>
+			<Option name="DATAGROUP" inputType="string">LASR Table</Option>
+			<Option name="DATALABEL" indent="0" inputType="string">Please pick a table from the LASR library</Option>
+			<Option name="LASRRET" indent="0" inputType="string" width="300px">[-- A LASR Table is a REQUIREMENT to be able to submit SAS code --]</Option>
+			<Option inputType="string" name="TABOPTIONS">TABLE OPTIONS</Option>		
+			<Option inputType="string" name="where">WHERE CLAUSE FILTER</Option>
+			<Option defaultValue="0" inputType="checkbox" name="applyWhereClause">Apply where clause</Option>                              
+			<Option defaultValue='gender="Male"' indent="1" inputType="textbox" name="whereString" width="300px">No " ; " required.  Example below</Option>
+			<Option defaultValue="" indent="1" inputType="string" name="whereString2">Please put character values in " "</Option>
+			<Option indent="1" inputType="checkbox" name="includeAsFootnote">Include as footnote</Option>                              
+			<Option inputType="string" name="whereClause">Where clause:</Option>  
+			            	
+			<Option defaultValue="0" inputType="checkbox" name="TABLEINFO">Table Info</Option>
+			<Option defaultValue="0" inputType="checkbox" name="COLUMNINFO">Column Info</Option>
+			<Option defaultValue="0" inputType="checkbox" name="NUMROWS">Number of Rows</Option>
+			<Option defaultValue="0" inputType="checkbox" name="PARTINFO">Partition Info</Option>
+
+			<Option name="VIEWGRP" inputType="string">PRINT</Option>
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="FETCH">Print records (5 by default)</Option>
+			<Option name="PGROUP" inputType="string">Print More?</Option>			
+			<Option defaultValue="0" indent="2" inputType="checkbox" name="PMORE">Print more records?</Option>
+			<Option name="printSlider" defaultValue="5" inputType="slider" discreteValues="100" minValue="1" maxValue="100" showButtons="true">How many to print?</Option>
+			<Option name="RGROUP" inputType="string">RANK</Option>
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="TOPK">Top and Bottom 5 Values ALL Variables</Option>		
+			
+			<Option name="EXPTAB" inputType="string">EXPLORE</Option>
+			<Option name="EXPGRP" inputType="string">EXPLORE</Option>
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="DISTINCT">Distinct Values</Option>
+			<Option default="0" name="HOW_MANY_SLIDER" inputType="string">HOW MANY?</Option>
+			<Option name="labelHOW_MANY_SLIDER" inputType="string">Maximum Number of Distinct Values to use for Frequency Tables</Option>	           
+			<Option name="DISTINCT_HOW_MANY_SLIDER" defaultValue="12" minValue="0" inputType="numstepper" indent="1">Distinct Values</Option>
+			<Option name="SUMMARY" inputType="string">SIMPLE</Option>				
+			<Option inputType="string" name="STATSTAB">STATISTICS</Option>
+			<Option name="STATS" indent="1" inputType="checkbox">Summary Statistics</Option>
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="PERC">Percentiles</Option>
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="HIST">Histogram</Option>
+			<Option name="SPACE1" inputType="string"> </Option>
+			<Option name="SPACE2" inputType="string"> </Option>    
+		           
+			<Option defaultValue="0" inputType="checkbox" name="RESET">---------Reset ALL Checked Items - EXCEPT Where Clause</Option>
+			<Option defaultValue="0" inputType="checkbox" name="SRESET">---------Reset ALL Checked Items</Option>
+			<Option defaultValue="1" inputType="checkbox" name="HELPCM">Help / Comments</Option>
+			
+
+			<!-- STATISTICS TAB -->	   
+			<Option name="STATGRP" inputType="string">DESCRIPTIVE</Option>
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="CORR">Correlation</Option>
+			<!--- Define the task options.-->
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="REGCORR">Simple Linear Regression ALL VARIABLES</Option>
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="REGHIDE">Choose variables for Simple Linear Regression</Option>
+            <Option name="CHOOSE_CORR" inputType="string">Choose Regression Variables</Option>
+            <Option name="MUDGRP" inputType="string">MULTI-DIMENSIONAL</Option>
+            <Option defaultValue="0" indent="1" inputType="checkbox" name="MDSUMMARY">Choose variables for Multi-Dimensional Summary</Option>
+
+			<!-- MODIFY TAB -->	
+			<Option name="MODIFY" inputType="string">MODIFY</Option> 
+			<Option name="labelCOMBO" inputType="string">Please pick Transformation - For Elasticities Log is good :)</Option>
+			<Option name="comboMOD" defaultValue="log" inputType="combobox" width="100%">Functions:</Option>
+			<Option name="exp" inputType="string">exp</Option>
+			<Option name="log" inputType="string">log</Option>
+			<Option name="int" inputType="string">int</Option>
+			<Option name="log10" inputType="string">log10</Option>
+			<Option name="log2" inputType="string">log2</Option>
+			<Option name="round" inputType="string">round</Option>
+			<Option name="sqrt" inputType="string">sqrt</Option>
+
+			<!-- MODEL TAB -->			
+			<Option name="MODGRP" inputType="string">MODEL</Option>
+			<Option name="MOD_LABEL" inputType="string">Check your variables below to make sure you have everything you need</Option> 
+			<Option inputType="string" name="MGP">CHOOSE MODEL TYPE</Option>
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="GLM">GLM - Multiple Linear Regression</Option>
+			<Option defaultValue="0" indent="1" inputType="checkbox" name="GENMOD">Generalised Linear Model</Option>
+			<Option inputType="string" name="GENMODGRP">Roles for Model</Option>
+			<Option inputType="string" name="RG">ROLES</Option>  
+			<Option name="comboDIST" defaultValue="NORMAL" inputType="combobox" width="100%">Distribution of Response Variable</Option>	
+			<Option name="EXPONENTIAL" inputType="string">EXPONENTIAL</Option>
+			<Option name="GAMMA" inputType="string">GAMMA</Option>	
+			<Option name="GENPOISSON" inputType="string">GENPOISSON</Option>
+			<Option name="GEOMETRIC" inputType="string">GEOMETRIC</Option>	
+			<Option name="INVGAUSS" inputType="string">INVGAUSS</Option>
+			<Option name="NEGBINOMIAL" inputType="string">NEGBINOMIAL</Option>
+			<Option name="NORMAL" inputType="string">NORMAL</Option>
+			<Option name="POISSON" inputType="string">POISSON</Option>	
+			<Option name="T" inputType="string">T</Option>	
+			<Option name="comboLINK" defaultValue="    " inputType="combobox" width="100%">Link Function</Option>
+			<Option name="BLANK" inputType="string">      </Option>		
+		    <Option name="IDENTITY" inputType="string">IDENTITY</Option>					
+		    <Option name="LOGIT" inputType="string">LOGIT</Option>	
+		    <Option name="PROBIT" inputType="string">PROBIT</Option>	
+			<Option name="LOG" inputType="string">LOG</Option>	
+		    <Option name="LOGLOG" inputType="string">LOGLOG</Option>
+			<Option name="CLOGLOG" inputType="string">CLOGLOG</Option>	
+			<Option name="RECIP" inputType="string">RECIP</Option>					
+			<Option name="POWMINUS2" inputType="string">POWMINUS2</Option>	
+		
+		
+			<!--- Start Comment - Was in Rapid Predicitive Model Task... not in documentation - END Comment -->
+			<Option inputType="variablesummary" name="variableSummary"/> 
+			<Option name="MOD_OPT_GRP" inputType="string">MODEL OPTIONS</Option>	
+			<Option name="ASSGRP" inputType="string">ASSESS</Option>
+		    <Option defaultValue="0" indent="1" inputType="checkbox" name="RESULTS_TABLE">Calculate Predicted Value and Show Assessment Plots</Option>		
+			<Option name="NUM_BINS" defaultValue="20" minValue="10" inputType="numstepper" indent="1">Number of Bins for Lift Calculations</Option>
+			<Option defaultValue="1" indent="1" inputType="checkbox" name="FIT_STATISTICS">Fit Statistics</Option>
+			<Option defaultValue="1" inputType="checkbox" name="HELPCM_MOD">Help / Comments</Option>		
+			
+			
+			<!-- REPORT TAB -->	
+	        <Option defaultValue="0" name="HIDE_GLM" inputType="checkbox">HIDDEN NOT SURFACED ANYWHERE</Option>
+	        <Option defaultValue="0" name="HIDE_GENMOD" inputType="checkbox">HIDDEN NOT SURFACED ANYWHERE</Option>
+	        <Option name="REPORT_LABEL" inputType="string">Reporting is not available until modelling has been completed</Option>
+			<Option name="GLMR" inputType="checkbox">GLM Model Results</Option>
+		    <Option name="GENMODR" inputType="checkbox">Generalised Linear Model Results</Option>
+			<Option name="REPORT" inputType="string">REPORT</Option> 
+			<Option name="rbox" inputType="textbox" width="60%" 
+			defaultValue="Elasticities of Demand for UK Alcohol Consumption">Please enter a title for your report</Option>
+			<Option name="textbox" inputType="textbox" width="80%"
+			defaultValue="Analysis shows">Please enter comments on your analysis here</Option>
+			<Option name="varbox" inputType="textbox" width="80%">Please enter specifics on chosen variable</Option>
+			<Option name='EMail_ADDRESS' inputType="checkbox">email report?</Option>
+			<Option name="CEMAIL" inputType="validationtext" promptMsg="Enter your email address" 
+			        invalidMsg="Not an email address!" regExp="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">email address</Option>
+			<Option name="CREPORT" inputType="string">CREATE REPORT</Option> 			
+			<!-- Creates the Titletext which is then used when you choose which dataset you are going to use -->		
+			<Option inputType="string" name="titleText">Using IMSTAT on {dataset}</Option>
+
+			<!-- Options needed for the names of the Tabs -->
+			<Option inputType="string" name="OPTIONSTAB">OPTIONS</Option>            	     		        
+		</Options>		
+	</Metadata>
+
+	<!--- Define the UI for task options - The UI engine will determine the best representation. -->
+	<UI>
+
+		<!-- Layout for the DATA tab -->
+		<Container option="DATATAB">
+			<Group option="DATAGROUP" open="true">
+				<OptionItem option="DATALABEL"/>
+				<OptionItem option="LASRRET"/>	 
+				<DataItem data="DATASOURCE"/>					        
+			</Group>
+
+			<Group open="false" option="where">                
+				<OptionItem option="applyWhereClause"/>
+				<OptionItem option="whereString2"/>
+				<OptionItem option="whereString"/>  
+				<OptionItem option="includeAsFootnote"/>                
+			</Group>
+
+			<Group option="TABOPTIONS" open="true">
+				<OptionItem option="TABLEINFO"/>	
+				<OptionItem option="COLUMNINFO"/>			
+				<OptionItem option="PARTINFO"/>	
+				<OptionItem option="NUMROWS"/>	  
+			</Group>	
+
+			<Group option="VIEWGRP" open="false"> 
+				<OptionItem option="FETCH"/>
+			</Group>
+			
+			<Group option="PGROUP" open="true">
+				<OptionItem option="printSlider"/>	         		            
+			</Group> 
+			
+			<Group option="RGROUP" open="false">
+				<OptionItem option="TOPK"/>
+				<RoleItem role="RANKVAR"/>
+			</Group>	  
+
+			<Group option="EXPGRP" open="false"> 
+				<OptionItem option="DISTINCT"/>
+			</Group>
+			 
+			<Group option="HOW_MANY_SLIDER" open="true">		
+				<OptionItem option="labelHOW_MANY_SLIDER"/>
+				<OptionItem option="DISTINCT_HOW_MANY_SLIDER"/>
+			</Group>
+			<OptionItem option="SPACE1"/> 		 		   
+			<OptionItem option="RESET"/>
+			<OptionItem option="HELPCM"/>  
+
+		</Container>
+
+		<!-- Layout for the STATS tab -->
+		<Container option="STATSTAB">
+
+			<Group option="SUMMARY" open="true">
+				<OptionItem option="STATS"/>
+				<OptionItem option="PERC"/>			
+				<OptionItem option="HIST"/>
+				<RoleItem role="HISTVAR"/>
+			</Group>   
+
+			<Group option="STATGRP" open="false"> 
+				<OptionItem option="CORR"/>
+				<OptionItem option="REGCORR"/>
+				<OptionItem option="REGHIDE"/>
+		    </Group>
+		    
+		    <Group option="CHOOSE_CORR" open="true">
+				<RoleItem role="CORRINDEP"/>
+				<RoleItem role="REGCVAR"/>	            
+			</Group>
+						
+			<Group option="MUDGRP" open="false">
+			    <RoleItem role="MD_DEP"/>
+			    <RoleItem role="MD_BY"/>
+			</Group>						
+			<OptionItem option="SPACE2"/>   
+			<OptionItem option="SRESET"/>
+
+		</Container> 	
+
+		<!-- Layout for the MODIFY tab -->
+		<Container option="MODIFY">
+			<OptionItem option="labelCOMBO"/>
+			<OptionChoice option="comboMOD">
+				<OptionItem option="exp"/>
+				<OptionItem option="log"/>
+				<OptionItem option="int"/>
+				<OptionItem option="log10"/>
+				<OptionItem option="log2"/>
+				<OptionItem option="round"/>
+				<OptionItem option="sqrt"/>					
+			</OptionChoice>
+			<RoleItem role="MODVAR"/>
+			<RoleItem role="DROPVAR"/>
+		</Container>
+
+		<!-- Layout for the MODEL tab -->
+		<Container option="MODGRP">	 	
+		      <OptionItem option="MOD_LABEL"/>
+			<!--- Start Comment - Was in Rapid Predicitive Model Task... not in documentation - END Comment -->
+			<OptionItem option="variableSummary"/> 
+			
+			<Group option="RG" open="true">
+				<RoleItem role="DEP"/>	
+				<RoleItem role="INDEP"/>	
+				<RoleItem role="BY"/>	 		
+			</Group>
+							
+			<Group option="MGP" open="true"> <!--- Model Type Groups -->
+				<OptionItem option="GLM"/>
+				<OptionItem option="GENMOD"/>
+			</Group> 
+					  
+			<Group option="MOD_OPT_GRP" open="true">
+               <OptionItem option="FIT_STATISTICS"/>
+             <OptionChoice option="comboDIST">	
+				<OptionItem option="EXPONENTIAL"/>
+				<OptionItem option="GAMMA"/>
+				<OptionItem option="GENPOISSON"/>
+				<OptionItem option="GEOMETRIC"/>
+				<OptionItem option="INVGAUSS"/>
+				<OptionItem option="NEGBINOMIAL"/>
+				<OptionItem option="NORMAL"/>
+				<OptionItem option="POISSON"/>
+				<OptionItem option="T"/>	
+			</OptionChoice>
+			<OptionChoice option="comboLINK">
+			    <OptionItem option="BLANK"/>
+			    <OptionItem option="IDENTITY"/>
+			    <OptionItem option="LOGIT"/>
+			    <OptionItem option="PROBIT"/> 
+			    <OptionItem option="LOG"/>
+			    <OptionItem option="LOGLOG"/>
+			    <OptionItem option="CLOGLOG"/>
+			    <OptionItem option="RECIP"/>
+			    <OptionItem option="POWMINUS2"/>
+			</OptionChoice>
+            </Group>
+						
+			<Group option="ASSGRP" open="false">
+               <OptionItem option="RESULTS_TABLE"/>          
+               <OptionItem option="NUM_BINS"/>
+            </Group>
+             
+             <OptionItem option="HELPCM_MOD"/>
+		</Container> 
+		          
+		<!-- Layout for the REPORT tab -->
+		<Container option="REPORT"> 
+		    <OptionItem option="REPORT_LABEL"/>
+		    <OptionItem option="GLMR"/>
+		    <OptionItem option="GENMODR"/>
+		    
+    <Group option="CREPORT" open="true">		    
+			<OptionItem option="rbox"/>
+			<OptionItem option="textbox"/>
+			<RoleItem role="RESVAR"/>
+			<OptionItem option="varbox"/>
+			<OptionItem option="EMail_ADDRESS"/>
+			<OptionItem option="CEMAIL" />
+	</Group>		
+		
+		</Container>		
+
+	</UI>
+
+	<Dependencies>
+		<Dependency condition="$DISTINCT == '1'">     
+			<Target action="show" conditionResult="true" option="HOW_MANY_SLIDER"/>
+			<Target action="hide" conditionResult="false" option="HOW_MANY_SLIDER"/>
+		</Dependency>
+
+		<Dependency condition="$FETCH == '1'">    
+			<Target action="show" conditionResult="true" option="PGROUP"/>
+			<Target action="hide" conditionResult="false" option="PGROUP"/>
+		</Dependency> 
+		
+		<Dependency condition="$REGHIDE == '1'">    
+			<Target action="show" conditionResult="true" option="CHOOSE_CORR"/>
+			<Target action="hide" conditionResult="false" option="CHOOSE_CORR"/>
+		</Dependency> 
+		
+
+	<Dependency condition="$GLM == '1'"> 
+	    <Target action="set" conditionResult="true" option="HIDE_GLM" property="value" value="1"/> 
+	    <Target action="show" conditionResult="false" option="GENMOD"/>
+	    <Target action="hide" conditionResult="true" option="GENMOD"/>	   
+		</Dependency> 
+		 		
+		<Dependency condition="$GENMOD == '1'">  
+		<Target action="set" conditionResult="true" option="HIDE_GENMOD" property="value" value="1"/> 
+	    <Target action="show" conditionResult="false" option="GLM"/>
+	      <Target action="hide" conditionResult="true" option="GLM"/>
+		</Dependency> 
+		
+		<Dependency condition="$GLMR == '1'">  
+	      <Target action="show" conditionResult="false" option="GENMODR"/>
+	      <Target action="hide" conditionResult="true" option="GENMODR"/>
+		</Dependency> 
+
+		<Dependency condition="$GENMODR == '1'">  
+	      <Target action="show" conditionResult="false" option="GLMR"/>
+	      <Target action="hide" conditionResult="true" option="GLMR"/>
+		</Dependency> 
+		      
+        <Dependency condition="$GENMODR == '1' || $GLMR == '1'">  
+          <Target action="show" conditionResult="true" option="CREPORT"/>
+	      <Target action="hide" conditionResult="false" option="CREPORT"/>
+        </Dependency>
+        
+		<Dependency condition="$GENMOD == '1' || $GLM == '1'">     
+			<Target action="show" conditionResult="true" option="RG"/>
+			<Target action="hide" conditionResult="false" option="RG"/>
+			<Target action="show" conditionResult="true" option="ASSGRP"/>
+			<Target action="hide" conditionResult="false" option="ASSGRP"/>
+			<Target action="show" conditionResult="true" option="MOD_OPT_GRP"/>
+			<Target action="hide" conditionResult="false" option="MOD_OPT_GRP"/>
+		    <Target action="hide" conditionResult="true" option="REPORT_LABEL"/>
+		</Dependency>   
+		
+		<Dependency condition="$GENMOD == '1'">
+		   <Target action="show" conditionResult="true" option="comboDIST"/>
+		   <Target action="hide" conditionResult="false" option="comboDIST"/>  
+		    <Target action="show" conditionResult="true" option="comboLINK"/>
+		   <Target action="hide" conditionResult="false" option="comboLINK"/>  
+		</Dependency> 
+					 	
+		<Dependency condition="$HIST == '1'">     
+			<Target action="show" conditionResult="true" option="HISTVAR"/>
+			<Target action="hide" conditionResult="false" option="HISTVAR"/>
+		</Dependency>  
+	  
+	  	<Dependency condition="$EMail_ADDRESS == '1'">     
+			<Target action="show" conditionResult="true" option="CEMAIL"/>
+			<Target action="hide" conditionResult="false" option="CEMAIL"/>
+		</Dependency>  
+	  	  
+		<Dependency condition=" $applyWhereClause== '1' ">
+			<Target action="enable" conditionResult="true" option="whereString"/>
+			<Target action="disable" conditionResult="false" option="whereString"/>
+			<Target action="enable" conditionResult="true" option="includeAsFootnote"/>
+			<Target action="disable" conditionResult="false" option="includeAsFootnote"/>
+		</Dependency> 
+
+		<Dependency condition="$RESET == '1'">     
+			<Target action="set" conditionResult="true" option="TABLEINFO" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="COLUMNINFO" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="PARTINFO" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="NUMROWS" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="FETCH" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="TOPK" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="DISTINCT" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="RESET" property="value" value="0"/>
+		</Dependency>   
+
+		<Dependency condition="$SRESET == '1'">     
+			<Target action="set" conditionResult="true" option="STATS" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="PERC" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="HIST" property="value" value="0"/>
+			<Target action="set" conditionResult="true" option="CORR" property="value" value="0"/>  
+			<Target action="set" conditionResult="true" option="REGCORR" property="value" value="0"/> 
+			<Target action="set" conditionResult="true" option="REGHIDE" property="value" value="0"/> 
+		    <Target action="set" conditionResult="true" option="SRESET" property="value" value="0"/> 
+		 	<!-- SRESET must be last otherwise last once wont fire  -->
+		</Dependency>  
+				
+		<Dependency condition="($DATASOURCE.getLibrary() =='LASR')">    
+			<Target action="show" conditionResult="false" option="LASRRET"/>
+			<Target action="hide" conditionResult="true" option="LASRRET"/>
+		</Dependency> 
+				
+			  <!--     On Initialisation HIDE_GLM is set to O so GLMR will be hidden -->
+		<Dependency condition="$HIDE_GLM == '0'">  
+	        <Target action="hide" conditionResult="true" option="GLMR"/> 
+		</Dependency> 
+		     <!--     Once GLM is selected then $HIDE_GLM becomes 1 so GLMR will be unhidden and
+		              remains unhidden as $HIDE_GLM is always 1 -->
+		<Dependency condition="$HIDE_GLM == '1'">  
+	        <Target action="show" conditionResult="true" option="GLMR"/> 
+		</Dependency> 
+		 	 	
+		<Dependency condition="$HIDE_GENMOD == '0'">  
+	        <Target action="hide" conditionResult="true" option="GENMODR"/> 
+		</Dependency> 
+				
+		<Dependency condition="$HIDE_GENMOD == '1'">  
+	        <Target action="show" conditionResult="true" option="GENMODR"/> 
+		</Dependency> 
+		 	 	 
+		
+	</Dependencies>
+	
+    <Requirements>
+    
+      	  <!-- Multiple requirements of the same thing to get the text I want to appear over multiple lines
+      	       when a user doesnt select a suitable LASR Table -->
+      <Requirement condition="($DATASOURCE.getLibrary() =='LASR')"> 
+          <Message>You must choose a LASR Table for your analysis. </Message>
+      </Requirement>  
+      <Requirement condition="($DATASOURCE.getLibrary() =='LASR')"> 
+      <Message>The SAS LASR Analytic Server is an analytic platform that provides a secure, </Message>
+      </Requirement>     
+      <Requirement condition="($DATASOURCE.getLibrary() =='LASR')">  
+      <Message>multi-user environment for concurrent access to data that is loaded into memory.</Message>    
+      </Requirement> 
+      <Requirement condition="($DATASOURCE.getLibrary() =='LASR')"> 
+      <Message>By loading tables into memory for analytic processing, the server enables you</Message>
+      </Requirement>    
+      <Requirement condition="($DATASOURCE.getLibrary() =='LASR')"> 
+      <Message>to explore data and discover relationships in data at the speed of RAM.
+      </Message>                     
+      </Requirement>
+    </Requirements>
+
+    <CodeTemplate>
+
+	<![CDATA[	
+		
+****************************************************************
+* Now Everyone can be a DATA Scientist - Steve Ludlow - SAS UK *
+****************************************************************
+;
+#set( $TABLE = $DATASOURCE )
+#set( $finalTitle = $titleText.replace("{dataset}", "$DATASOURCE") )
+#set( $UNDERSCORE ='_')
+
+title1 "$finalTitle";
+
+proc imstat;
+   table $DATASOURCE; 
+##--Where Clause--*/
+#if ( $applyWhereClause == 1 && $whereString.length() > 0 ) where $whereString ; #end
+#if ($TABLEINFO == '1' && $HELPCM == '1')
+************************************************************
+* The TABLEINFO statement is used to return information about  *
+* an in-memory table. This information includes the table name,*
+* label, number of rows and column, owner, encoding, and the   *
+* time of table creation.                                      *
+****************************************************************
+; #end
+#if ($TABLEINFO == '1')
+tableinfo ; #end
+#if ($COLUMNINFO == '1' && $HELPCM == '1')
+************************************************************
+* The COLUMNINFO statement is used to return information for   *
+* all the columns in an in-memory table.                       *
+****************************************************************
+; #end
+#if ($COLUMNINFO == '1') columninfo ; #end
+#if ($PARTINFO == '1') partitioninfo ;#end
+#if ($NUMROWS == '1' && $HELPCM == '1') 
+************************************************************
+* The NUMROWS statement identifies how many rows satisfy a     *
+* selection criterion. The selection observes the WHERE clause *
+* and records marked for deletion or purging.                  *
+****************************************************************
+; #end
+#if ($NUMROWS == '1') numrows ; #end
+#if ($FETCH== '1') fetch  / from=1 to=$printSlider format ; #end
+#if ($TOPK == '1') topk / k1=5 k2=5; #end
+#if( $RANKVAR.size() > 0 ) topk #foreach( $item in $RANKVAR ) $item #end / k1=10 k2=10; #end 
+
+#if ($DISTINCT== '1' && $HELPCM == '1') 
+************************************************************
+* The DISTINCT statement calculates the count of unique raw    *
+* values of variables. You can specify the variables to        *
+* calculate in the variable list. As no list is specified, the *
+* count of unique raw values is calculated for all variables.  *
+*                                                              *
+* We also want to produce one-way Frequency tables but only    *
+* where the number of DISTINCT values is as you specify.       *
+*                                                              *                                        
+* TIP:                                                         *
+* Take as default then look at number of DISTINCT values then  *
+* change if you require                                        *
+****************************************************************
+; #end
+#if ($DISTINCT== '1')
+distinct _all_ / save=alc1; 
+store alc1( where="NDistinct le $DISTINCT_HOW_MANY_SLIDER",1)=list1;
+run; 
+frequency &list1;
+#end
+  
+#if ($STATS== '1') summary ; #end  
+#if ($PERC== '1') percentile ; #end 
+
+#if ($MDSUMMARY== '1') mdsummary quantity_beer_on_trade /groupby= (region gender); #end 
+
+#if($HISTVAR.size() > 0 )
+    histogram #foreach( $item in $HISTVAR ) $item #end /save=hist;
+    ods output histogram=work.hist;
+run;
+#end
+
+#if ($CORR== '1') corr ; #end 
+#if ($REGCORR== '1') regcorr ; #end 
+#if ($CORRINDEP.size() > 0 )
+     regcorr 
+     #foreach ( $item in $CORRINDEP) $item  #end  
+     #if ($REGCVAR.size() > 0 )
+        #foreach ( $item in $REGCVAR) $item  
+     #end 
+     ;
+#end        
+#end 
+
+#if($MD_DEP.size() > 0)
+    mdsummary #foreach( $item in $MD_DEP ) $item / #end   
+    #if( $MD_BY.size() > 0 ) groupby=( 
+     #foreach( $item in $MD_BY ) $item #end )
+    #end ;
+#end
+ 
+#if($DROPVAR.size() > 0) #foreach( $item in $DROPVAR ) dropcolumn $item ; #end #end 
+
+#if( $MODVAR.size() > 0)
+  #foreach( $item in $MODVAR )
+   compute $comboMOD$UNDERSCORE$item "$comboMOD$UNDERSCORE$item=$comboMOD($item);"; 
+  #end 
+#end 
+
+#if( $DEP.size() > 0 && $GLM == "1" )
+    glm #foreach( $item in $DEP ) $item = #end
+    
+    #if( $INDEP.size() > 0 )
+     #foreach( $item in $INDEP ) $item #end /
+    #end 
+  
+    #if ($BY.size() > 0 )
+    #foreach( $item in $BY ) groupby = $item #end  
+    #end
+    
+    #if ($RESULTS_TABLE == '1') score=(PRED) #end 
+    #if ($FIT_STATISTICS == '1') select=(PARAMETERMESTIMATES FitStatistics ModelInfo Dimensions) #end          
+;
+    ods output ParameterEstimates=work.glm_pest;   
+run;
+
+   #if ($RESULTS_TABLE == '1') 
+    table lasr.&_tempscore_;
+	ods output LiftRegInfo =  work.liftRegGLM;
+	assess _PRED_ / y= #foreach( $item in $DEP ) $item #end
+	nbins=$NUM_BINS
+	#foreach( $item in $BY ) groupby = $item #end
+;
+#end	
+#end  
+
+#if( $DEP.size() > 0 && $GENMOD == "1" )
+    genmodel #foreach( $item in $DEP ) $item = #end
+    
+    #if( $INDEP.size() > 0 )
+     #foreach( $item in $INDEP ) $item #end /
+    #end   
+    
+    #if ($BY.size() > 0 )
+    #foreach( $item in $BY ) groupby = $item #end  
+    #end
+    
+    #if ($RESULTS_TABLE == '1') score=(PRED) #end   
+    #if ($FIT_STATISTICS == '1') select=(PARAMETERMESTIMATES FitStatistics ModelInfo Dimensions) #end 
+#if ($HELPCM_MOD == '1') 
+/***********************************************************
+* DIST specifies the distribution of the response variable     *                                        
+*                                                              *
+* LINK specifies the link function to use for the model        *
+* fitting process. If you do not specify a link function, the  *
+* server selects the most appropriate function for the         *
+* distribution of the data.                                    *
+*                                                              *
+****************************************************************/
+; #end
+    dist=$comboDIST
+    link=$comboLINK
+;    
+    ods output ParameterEstimates=work.genmod_pest;   
+
+#if ($RESULTS_TABLE == '1') 
+    table lasr.&_tempscore_;
+	ods output LiftRegInfo =  work.liftRegGEN;
+	assess _PRED_ / y= #foreach( $item in $DEP ) $item #end
+	nbins=$NUM_BINS
+	#foreach( $item in $BY ) groupby = $item #end
+;
+#end	
+#end 
+ 
+#if( $includeAsFootnote == 1 && $whereString != "" ) footnote j=l
+    #set( $whereStr="$whereClause $whereString") $CTMUtil.quoteString($whereStr);
+#end
+
+run;
+quit;
+
+title;
+footnote;
+
+##--OUTSIDE of IMSTAT--*/
+
+#if ($RESULTS_TABLE == '1' && $GLM == '1' ) 
+title2 "Means Plot GLM Model";
+proc sgplot data=work.liftRegGLM;
+ series y=meanp x=depth / #foreach( $item in $BY ) group = $item #end ;
+ series y=meant x=depth / #foreach( $item in $BY ) group = $item #end ;
+ label meanp='Predicted and Response Mean'
+	;
+run;
+title2;
+#end
+
+#if ($RESULTS_TABLE == '1' && $GENMOD == '1' ) 
+title2 "Means Plot GENMOD Model";
+proc sgplot data=work.liftRegGEN;
+ series y=meanp x=depth / #foreach( $item in $BY ) group = $item #end ;
+ series y=meant x=depth / #foreach( $item in $BY ) group = $item #end ;
+ label meanp='Predicted and Response Mean'
+	;
+run;
+title2;
+#end
+
+#if($HISTVAR.size() > 0 )
+
+proc sgplot data=WORK.HIST;
+	vbar BinNumber / response=Frequency stat=Mean name='Bar';
+	yaxis grid;
+run;
+#end 
+
+#if ($GLMR=='1')
+
+data glm_pest_mod;
+ set work.glm_pest;
+ length comment $200;  
+ if parameter="#if($RESVAR.size()>0)#foreach($item in $RESVAR)$item#end#end" then comment="$varbox";
+     label comment='Comment'
+ ;
+run;
+
+ods pdf file='.\alc_sgf.pdf';
+
+data _null_;
+    length report $32677;
+    file print ods;
+	report= "$textbox";
+	put _ods_;
+	label report='Analysis of Results'
+	;
+run;
+
+title "$rbox";
+title2 "$textbox";
+
+proc format;
+ value $color ' ' = white
+            other = light green;
+run;
+
+proc print data=glm_pest_mod(where=(effect not in (' ', 'Intercept'))) noobs label;
+	var parameter estimate tvalue probt; 
+	var comment /style=[background=$color.];
+	by gender;
+run;
+
+proc sgplot data=glm_pest_mod(where=(effect not in (' ','Intercept')));
+ vbar parameter / response=estimate group=gender groupdisplay=cluster;
+run;
+title;
+
+ods pdf close;
+#end
+
+#if ($GENMODR=='1')
+
+data genmod_pest_mod;
+ set work.genmod_pest;
+ length comment $200;  
+ if parameter="#if($RESVAR.size()>0)#foreach($item in $RESVAR)$item#end#end" then comment="$varbox";
+     label comment='Comment'
+ ;
+run;
+
+ods pdf file='.\alc_sgf.pdf';
+
+data _null_;
+    length report $32677;
+    file print ods;
+	report= "$textbox";
+	put _ods_;
+	label report='Analysis of Results'
+	;
+run;
+
+title "$rbox";
+title2 "$textbox";
+
+proc format;
+ value $color ' ' = white
+            other = light green;
+run;
+
+proc print data=genmod_pest_mod(where=(effect not in (' ', 'Intercept'))) noobs label;
+	var parameter estimate zvalue probz; 
+	var comment /style=[background=$color.];
+	by gender;
+run;
+
+proc sgplot data=genmod_pest_mod(where=(effect not in (' ','Intercept')));
+ vbar parameter / response=estimate group=gender groupdisplay=cluster;
+run;
+title;
+
+ods pdf close;
+#end
+
+#if ($EMail_ADDRESS=='1')
+
+options emailsys=smtp emailhost=mailhost.fyi.sas.com emailport=25;
+
+filename myfile email to= ("$CEMAIL") replyto= ("$CEMAIL") 
+subject= "$rbox" 
+         type="text/plain" 
+attach=(".\alc_sgf.pdf");
+
+data _null_;
+file myfile;
+put 'Please find attached my latest report';
+run;
+quit;
+
+#end
+		]]>
+	</CodeTemplate>
+</Task>
