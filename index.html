@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<!-- 
+	<script
+	async
+		src="https://unpkg.com/@sassoftware/va-report-components@latest/dist/umd/va-report-components.js">
+		src="http://dvr.na.sas.com/web-sdk-test/va-sdk/0.2.42/va-report-components.js"
+		src="../vasdk/0.2.42/va-report-components.js"
+	</script>
+-->
+	<script
+		async
+		src="https://unpkg.com/@sassoftware/va-report-components@0.3.0-beta1/dist/umd/va-report-components.js">
+	</script>
+
+    <style>
+      body {
+        padding: 0 2rem 0 2rem;
+        background-color: #f0f0f0;
+      }
+      .container {
+        background-color: #ffffff;
+        flex-grow: 1;
+        flex-basis: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+      .flex-container {
+        display: flex;
+        flex-direction: row;
+      }
+      .large-content {
+        margin: 2rem 0 2rem 0;
+        width: 100%;
+        height: 800px;
+      }
+      .small-content {
+        margin: 2rem 0 2rem 0;
+        width: 100%;
+        height: 400px;
+      }
+      .left-content {
+        margin-right: 1rem;
+      }
+      .right-content {
+        margin-left: 1rem;
+      }
+      .placeholder {
+        font-size: 30pt;
+      }
+      sas-report,
+      sas-report-object {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container large-content">
+	   <h1>Full VA Report!</h1>
+
+<sas-report hideNavigation="auto"
+ authenticationType="credentials"
+ url="http://pdcesx18142.exnet.sas.com"
+ reportUri="/reports/reports/26e8433b-161e-4855-8fa9-02c7c50b4bab"
+></sas-report>
+
+
+
+    </div>	
+    <div class="flex-container small-content">
+      <div class="container left-content">
+		<h1>VA Report Object </h1>
+
+
+
+
+
+     </div>
+      <div class="container right-content">
+		<h1>VA Report Object</h1>
+
+
+		
+
+	
+      </div>
+     </div>
+  </body>
+</html>
